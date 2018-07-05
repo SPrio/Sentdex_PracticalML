@@ -1,3 +1,4 @@
+import math
 from typing import Optional, Any
 
 import pandas as pd
@@ -32,3 +33,9 @@ df_1 = df_1[['Adj. Close', 'HL_PCT', 'PCT_change', 'Adj. Volume']]
 
 forecast_col='Adj. Close'
 df_1.fillna(-99999,inplace=True)
+
+forecast_out = int(math.ceil(0.01 * len(df)))
+df_1['label'] = df_1[forecast_col].shift(-forecast_out)
+
+df_1.dropna(inplace=True)
+print(df_1.head()) 
